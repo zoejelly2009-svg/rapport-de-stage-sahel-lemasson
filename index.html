@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rapport de Stage – Bureau Vallée</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --blue-dark: #0a2d8f;
+      --blue-mid:  #1a4fc4;
+      --blue-light:#3a6fdf;
+      --yellow:    #f5c800;
+      --yellow-dark:#c9a200;
+      --white:     #ffffff;
+      --off-white: #f0f4ff;
+      --text-dark: #0a1a3a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--off-white);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 64px;
+      background: rgba(10,45,143,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 3px solid var(--yellow);
+    }
+    nav .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.1rem;
+      color: var(--yellow);
+      letter-spacing: .05em;
+    }
+    nav ul {
+      list-style: none;
+      display: flex; gap: 2rem;
+    }
+    nav ul a {
+      color: rgba(255,255,255,.8);
+      text-decoration: none;
+      font-size: .85rem; font-weight: 500;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    nav ul a:hover { color: var(--yellow); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(160deg, var(--blue-dark) 0%, var(--blue-mid) 60%, var(--blue-light) 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 100px 2rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute; bottom: -2px; left: 0; right: 0;
+      height: 120px;
+      background: var(--off-white);
+      clip-path: ellipse(55% 100% at 50% 100%);
+    }
+    .wave-deco {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      pointer-events: none;
+    }
+    #hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      animation: fadeUp .8s ease both;
+    }
+    #hero h1 span { color: var(--yellow); }
+    #hero .sub {
+      margin-top: 1.2rem;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: rgba(255,255,255,.75);
+      font-weight: 300;
+      animation: fadeUp .8s .15s ease both;
+    }
+    .hero-badge {
+      margin-top: 2rem;
+      display: inline-block;
+      padding: .6rem 1.6rem;
+      background: var(--yellow);
+      color: var(--blue-dark);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: .95rem;
+      border-radius: 100px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      animation: fadeUp .8s .3s ease both;
+    }
+    .logo-bv {
+      margin-top: 3rem;
+      background: var(--yellow);
+      border-radius: 16px;
+      padding: 1rem 2.5rem;
+      display: inline-flex; align-items: center; gap: .8rem;
+      animation: fadeUp .8s .45s ease both;
+    }
+    .logo-bv span {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.6rem;
+      color: var(--blue-dark);
+    }
+    .logo-bv .birds { font-size: 1.4rem; }
+
+    .hero-info {
+      margin-top: 2.5rem;
+      display: flex; gap: 2.5rem; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp .8s .55s ease both;
+    }
+    .hero-info-item {
+      color: rgba(255,255,255,.7);
+      font-size: .9rem;
+    }
+    .hero-info-item strong { color: var(--yellow); display: block; font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTION BASE ── */
+    section {
+      padding: 6rem 2rem;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-family: 'Syne', sans-serif;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--blue-mid);
+      margin-bottom: .8rem;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      color: var(--blue-dark);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .section-title span { color: var(--yellow-dark); }
+    .section-text {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #2a3a60;
+      max-width: 700px;
+    }
+    .divider {
+      width: 60px; height: 5px;
+      background: var(--yellow);
+      border-radius: 3px;
+      margin: 1.2rem 0 2rem;
+    }
+
+    /* ── SOMMAIRE ── */
+    #sommaire {
+      background: var(--blue-dark);
+      color: white;
+    }
+    #sommaire .section-title { color: white; }
+    #sommaire .section-label { color: var(--yellow); }
+    .sommaire-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.2rem;
+      margin-top: 2.5rem;
+    }
+    .sommaire-card {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 14px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: background .2s, transform .2s, border-color .2s;
+      text-decoration: none;
+      color: white;
+      display: block;
+    }
+    .sommaire-card:hover {
+      background: rgba(245,200,0,.15);
+      border-color: var(--yellow);
+      transform: translateY(-4px);
+    }
+    .sommaire-card .num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--yellow);
+      line-height: 1;
+    }
+    .sommaire-card .title {
+      margin-top: .5rem;
+      font-size: .9rem;
+      font-weight: 500;
+      letter-spacing: .03em;
+    }
+
+    /* ── INTRO ── */
+    #introduction {
+      background: var(--off-white);
+    }
+    .intro-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .intro-visual {
+      background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .intro-visual::after {
+      content: '✦';
+      position: absolute; right: 1.5rem; top: 1.5rem;
+      font-size: 3rem;
+      color: rgba(245,200,0,.3);
+    }
+    .intro-visual h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--yellow);
+      margin-bottom: 1.2rem;
+    }
+    .intro-visual p {
+      font-size: .95rem;
+      line-height: 1.8;
+      opacity: .85;
+    }
+
+    /* ── ENTREPRISE ── */
+    #entreprise {
+      background: white;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .card {
+      background: var(--off-white);
+      border-radius: 18px;
+      padding: 2rem;
+      border-left: 5px solid var(--yellow);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 40px rgba(10,45,143,.12);
+    }
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      margin-bottom: .6rem;
+    }
+    .card p {
+      font-size: .92rem;
+      line-height: 1.7;
+      color: #3a4a70;
+    }
+
+    /* ── ORGANIGRAMME ── */
+    #organigramme {
+      background: var(--off-white);
+    }
+    .org-tree {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .org-level {
+      display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    }
+    .org-node {
+      background: var(--blue-dark);
+      color: white;
+      border-radius: 12px;
+      padding: .8rem 1.4rem;
+      text-align: center;
+      min-width: 150px;
+      position: relative;
+    }
+    .org-node.top { background: var(--yellow); color: var(--blue-dark); }
+    .org-node.mid { background: var(--blue-mid); }
+    .org-node .role {
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      opacity: .7;
+      margin-bottom: .2rem;
+    }
+    .org-node .name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: .95rem;
+    }
+    .org-node .detail {
+      font-size: .72rem;
+      opacity: .7;
+      margin-top: .2rem;
+    }
+    .org-arrow {
+      font-size: 1.5rem;
+      color: var(--blue-mid);
+    }
+
+    /* ── POSTES ── */
+    #postes { background: white; }
+    .postes-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2.5rem;
+    }
+    .poste-card {
+      border-radius: 20px;
+      overflow: hidden;
+      border: 2px solid var(--off-white);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .poste-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(10,45,143,.1);
+    }
+    .poste-card.highlight {
+      border-color: var(--yellow);
+      grid-column: 1 / -1;
+    }
+    .poste-header {
+      background: var(--blue-dark);
+      color: white;
+      padding: 1.2rem 1.5rem;
+      display: flex; align-items: center; gap: .8rem;
+    }
+    .poste-card.highlight .poste-header { background: var(--yellow); color: var(--blue-dark); }
+    .poste-icon { font-size: 1.4rem; }
+    .poste-header h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+    }
+    .poste-body {
+      padding: 1.5rem;
+      background: var(--off-white);
+    }
+    .poste-body p {
+      font-size: .93rem;
+      line-height: 1.75;
+      color: #2a3a60;
+    }
+    .badge-main {
+      display: inline-block;
+      background: var(--yellow);
+      color: var(--blue-dark);
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      padding: .25rem .7rem;
+      border-radius: 100px;
+      margin-top: .8rem;
+    }
+
+    /* ── MACHINES ── */
+    #machines { background: var(--off-white); }
+    .machines-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .machine-card {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(10,45,143,.08);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .machine-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 40px rgba(10,45,143,.14);
+    }
+    .machine-img-placeholder {
+      height: 180px;
+      background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+    }
+    .machine-info {
+      padding: 1.4rem;
+    }
+    .machine-info h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      margin-bottom: .5rem;
+    }
+    .machine-info p {
+      font-size: .88rem;
+      line-height: 1.6;
+      color: #3a4a70;
+    }
+    .machine-tag {
+      display: inline-block;
+      margin-top: .8rem;
+      background: var(--blue-dark);
+      color: white;
+      font-size: .72rem;
+      padding: .25rem .8rem;
+      border-radius: 100px;
+      letter-spacing: .05em;
+    }
+
+    /* ── EXPERIENCE ── */
+    #experience {
+      background: var(--blue-dark);
+      color: white;
+    }
+    #experience .section-title { color: white; }
+    #experience .section-label { color: var(--yellow); }
+    #experience .section-text { color: rgba(255,255,255,.8); }
+    .exp-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .skills-list {
+      display: flex; flex-direction: column; gap: .8rem;
+      margin-top: 2rem;
+    }
+    .skill-item {
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .skill-item .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--yellow);
+      flex-shrink: 0;
+    }
+    .skill-item span {
+      font-size: .95rem;
+      color: rgba(255,255,255,.85);
+    }
+    .exp-quote {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.15);
+      border-left: 4px solid var(--yellow);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 1rem;
+    }
+    .exp-quote p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,.85);
+      font-style: italic;
+    }
+
+    /* ── CONCLUSION / REMERCIEMENTS ── */
+    #conclusion {
+      background: white;
+    }
+    .conclusion-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .merci-block {
+      background: var(--yellow);
+      border-radius: 24px;
+      padding: 3rem;
+      text-align: center;
+    }
+    .merci-block .big {
+      font-family: 'Syne', sans-serif;
+      font-size: 4rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+      line-height: 1;
+    }
+    .merci-block p {
+      margin-top: 1rem;
+      color: var(--blue-dark);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--text-dark);
+      color: rgba(255,255,255,.5);
+      text-align: center;
+      padding: 2rem;
+      font-size: .85rem;
+    }
+    footer strong { color: var(--yellow); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .intro-layout, .postes-layout, .exp-layout, .conclusion-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .poste-card.highlight { grid-column: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Rapport de Stage</div>
+    <ul>
+      <li><a href="#introduction">Intro</a></li>
+      <li><a href="#entreprise">Entreprise</a></li>
+      <li><a href="#organigramme">Organigramme</a></li>
+      <li><a href="#postes">Postes</a></li>
+      <li><a href="#machines">Machines</a></li>
+      <li><a href="#experience">Expérience</a></li>
+      <li><a href="#conclusion">Conclusion</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO / PAGE DE GARDE -->
+  <section id="hero">
+    <div class="hero-badge">Rapport de stage · 2024–2025</div>
+    <h1>Stage chez<br/><span>Bureau Vallée</span></h1>
+    <p class="sub">Découverte du monde de l'imprimerie et de la papeterie professionnelle</p>
+    <div class="logo-bv">
+      <span class="birds">🕊️🕊️🕊️</span>
+      <span>Bureau Vallée</span>
+    </div>
+    <div class="hero-info">
+      <div class="hero-info-item">
+        <strong>Élève</strong>
+        [Ton prénom et nom]
+      </div>
+      <div class="hero-info-item">
+        <strong>Classe</strong>
+        [Ta classe]
+      </div>
+      <div class="hero-info-item">
+        <strong>Lycée</strong>
+        Avenue Hauterive, Castres
+      </div>
+      <div class="hero-info-item">
+        <strong>Année</strong>
+        2024–2025
+      </div>
+    </div>
+  </section>
+
+  <!-- SOMMAIRE -->
+  <section id="sommaire">
+    <div class="container">
+      <div class="section-label">Navigation</div>
+      <h2 class="section-title">Sommaire</h2>
+      <div class="divider" style="background:var(--yellow)"></div>
+      <div class="sommaire-grid">
+        <a href="#introduction" class="sommaire-card">
+          <div class="num">01</div>
+          <div class="title">Introduction</div>
+        </a>
+        <a href="#entreprise" class="sommaire-card">
+          <div class="num">02</div>
+          <div class="title">Présentation de l'entreprise</div>
+        </a>
+        <a href="#organigramme" class="sommaire-card">
+          <div class="num">03</div>
+          <div class="title">Organigramme</div>
+        </a>
+        <a href="#postes" class="sommaire-card">
+          <div class="num">04</div>
+          <div class="title">Les différents postes</div>
+        </a>
+        <a href="#machines" class="sommaire-card">
+          <div class="num">05</div>
+          <div class="title">Les machines</div>
+        </a>
+        <a href="#experience" class="sommaire-card">
+          <div class="num">06</div>
+          <div class="title">Mon expérience</div>
+        </a>
+        <a href="#conclusion" class="sommaire-card">
+          <div class="num">07</div>
+          <div class="title">Conclusion &amp; Remerciements</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRODUCTION -->
+  <section id="introduction">
+    <div class="container">
+      <div class="intro-layout">
+        <div>
+          <div class="section-label">01 — Introduction</div>
+          <h2 class="section-title">Se présenter &amp;<br/><span>le choix du stage</span></h2>
+          <div class="divider"></div>
+          <p class="section-text">
+            [Présente-toi ici : ton nom, ta classe, ton lycée à Castres.]
+          </p>
+          <p class="section-text" style="margin-top:1rem">
+            [Explique pourquoi tu as choisi Bureau Vallée, comment tu as trouvé ce stage, et ce que tu espérais en apprendre.]
+          </p>
+          <p class="section-text" style="margin-top:1rem">
+            Ce rapport présente les différentes facettes de mon stage : la découverte de l'entreprise, ses postes, ses machines, ainsi que mon retour d'expérience personnel.
+          </p>
+        </div>
+        <div class="intro-visual">
+          <h3>Bureau Vallée</h3>
+          <p>
+            Enseigne française spécialisée dans la papeterie, les fournitures de bureau et les services d'impression. Mon stage s'est principalement déroulé en <strong style="color:var(--yellow)">zone service</strong>, au cœur des prestations d'impression et de reprographie.
+          </p>
+          <p style="margin-top:1rem;font-size:.88rem;opacity:.65">
+            Adresse : [Adresse du magasin]
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRÉSENTATION ENTREPRISE -->
+  <section id="entreprise">
+    <div class="container">
+      <div class="section-label">02 — Présentation de l'entreprise</div>
+      <h2 class="section-title">Bureau Vallée,<br/><span>qui sont-ils ?</span></h2>
+      <div class="divider"></div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">📜</div>
+          <h3>Historique</h3>
+          <p>[Décris l'histoire de Bureau Vallée : fondation, développement, nombre de magasins en France, etc.]</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📍</div>
+          <h3>Situation géographique</h3>
+          <p>[Adresse du magasin où tu as fait ton stage, ville, zone commerciale, etc.]</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🖨️</div>
+          <h3>Activités</h3>
+          <p>Papeterie, fournitures de bureau, services d'impression, reprographie, plastification, reliure, vente d'imprimantes et cartouches.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔗</div>
+          <h3>La chaîne graphique</h3>
+          <p>Bureau Vallée s'inscrit dans la phase de <strong>reproduction / impression</strong> de la chaîne graphique : réception des fichiers clients, traitement, impression et finition (plastification, reliure, découpe).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORGANIGRAMME -->
+  <section id="organigramme">
+    <div class="container">
+      <div class="section-label">03 — Organigramme</div>
+      <h2 class="section-title">L'équipe du<br/><span>magasin</span></h2>
+      <div class="divider"></div>
+      <div class="org-tree">
+        <div class="org-level">
+          <div class="org-node top">
+            <div class="role">Directeur Magasin</div>
+            <div class="name">Valère Dossou</div>
+          </div>
+        </div>
+        <div class="org-arrow">↓</div>
+        <div class="org-level">
+          <div class="org-node mid">
+            <div class="role">Adjointe Magasin</div>
+            <div class="name">Manon Cousian</div>
+          </div>
+        </div>
+        <div class="org-arrow">↓</div>
+        <div class="org-level">
+          <div class="org-node">
+            <div class="role">Gestionnaire Rayon</div>
+            <div class="name">Jimmy Gerolani</div>
+          </div>
+          <div class="org-node">
+            <div class="role">Gestionnaire Rayon</div>
+            <div class="name">Celine Luirtz</div>
+          </div>
+          <div class="org-node">
+            <div class="role">Gestionnaire Rayon</div>
+            <div class="name">Kao Seatum</div>
+          </div>
+          <div class="org-node">
+            <div class="role">Gestionnaire Rayon</div>
+            <div class="name">Deborah Ribes</div>
+          </div>
+        </div>
+        <div class="org-arrow">↓</div>
+        <div class="org-level">
+          <div class="org-node">
+            <div class="role">Vendeur Polyvalent</div>
+            <div class="name">Hugo Corderet</div>
+          </div>
+          <div class="org-node">
+            <div class="role">Hôtesse de caisse</div>
+            <div class="name">Saratt Beurede</div>
+          </div>
+          <div class="org-node">
+            <div class="role">Vendeur Polyvalent</div>
+            <div class="name">Annabelle Goube</div>
+          </div>
+          <div class="org-node">
+            <div class="role">Alternance</div>
+            <div class="name">Eayan Meksavanh</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LES DIFFÉRENTS POSTES -->
+  <section id="postes">
+    <div class="container">
+      <div class="section-label">04 — Les différents postes</div>
+      <h2 class="section-title">Où travaille-t-on<br/><span>dans le magasin ?</span></h2>
+      <div class="divider"></div>
+      <div class="postes-layout">
+        <div class="poste-card highlight">
+          <div class="poste-header">
+            <span class="poste-icon">🖨️</span>
+            <h3>Zone Service — Mon poste principal</h3>
+          </div>
+          <div class="poste-body">
+            <p>
+              La zone service se situe à l'entrée du magasin, reliée à la caisse. C'est là que sont réalisées les photocopies, impressions, plastifications et reliures directement en face du client. Le client peut envoyer son fichier par e-mail ou via clé USB. Il y a également une zone libre-service pour les clients autonomes.
+            </p>
+            <span class="badge-main">⭐ Principal endroit où j'ai travaillé</span>
+          </div>
+        </div>
+        <div class="poste-card">
+          <div class="poste-header">
+            <span class="poste-icon">💻</span>
+            <h3>Post Info</h3>
+          </div>
+          <div class="poste-body">
+            <p>Situé au fond du magasin, ce poste est dédié à l'information et au conseil clients sur tout ce qui concerne l'informatique, les problèmes d'imprimantes et les cartouches.</p>
+          </div>
+        </div>
+        <div class="poste-card">
+          <div class="poste-header">
+            <span class="poste-icon">🛒</span>
+            <h3>En Rayons</h3>
+          </div>
+          <div class="poste-body">
+            <p>Conseil clients sur les produits, facing (agencement esthétique des produits en rayon), gestion et tri des étiquettes de prix.</p>
+          </div>
+        </div>
+        <div class="poste-card">
+          <div class="poste-header">
+            <span class="poste-icon">💰</span>
+            <h3>La Caisse</h3>
+          </div>
+          <div class="poste-body">
+            <p>Encaissement des achats clients, gestion de la file, accueil et orientation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LES MACHINES -->
+  <section id="machines">
+    <div class="container">
+      <div class="section-label">05 — Les machines</div>
+      <h2 class="section-title">Les équipements<br/><span>de la zone service</span></h2>
+      <div class="divider"></div>
+      <div class="machines-grid">
+        <div class="machine-card">
+          <div class="machine-img-placeholder">🖨️</div>
+          <div class="machine-info">
+            <h3>Sharp MX-6570</h3>
+            <p>Utilisée pour les impressions en noir et blanc. Machine multifonction haute performance.</p>
+            <span class="machine-tag">Noir &amp; blanc</span>
+          </div>
+        </div>
+        <div class="machine-card">
+          <div class="machine-img-placeholder">🖨️</div>
+          <div class="machine-info">
+            <h3>Sharp MX-7081</h3>
+            <p>Utilisée pour les impressions couleur et noir et blanc. Machine principale de la zone service.</p>
+            <span class="machine-tag">Couleur &amp; N&amp;B</span>
+          </div>
+        </div>
+        <div class="machine-card">
+          <div class="machine-img-placeholder">📸</div>
+          <div class="machine-info">
+            <h3>Imprimante Photo</h3>
+            <p>Dédiée exclusivement aux impressions sur papier photo. Cartouches d'encre spécialisées pour un rendu photographique optimal.</p>
+            <span class="machine-tag">Photo</span>
+          </div>
+        </div>
+        <div class="machine-card">
+          <div class="machine-img-placeholder">📐</div>
+          <div class="machine-info">
+            <h3>Traceur grand format</h3>
+            <p>Utilisé pour les impressions de grand format (A1 et plus). Séparé du reste de la zone service.</p>
+            <span class="machine-tag">Grand format A1+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MON EXPÉRIENCE -->
+  <section id="experience">
+    <div class="container">
+      <div class="exp-layout">
+        <div>
+          <div class="section-label">06 — Mon expérience</div>
+          <h2 class="section-title">Ce que j'ai<br/>appris &amp; vécu</h2>
+          <div class="divider" style="background:var(--yellow)"></div>
+          <p class="section-text">
+            Ce stage chez Bureau Vallée a été une expérience vraiment enrichissante, tant sur le plan professionnel que personnel.
+          </p>
+          <div class="skills-list">
+            <div class="skill-item"><div class="dot"></div><span>Maîtrise des machines d'impression et de reprographie</span></div>
+            <div class="skill-item"><div class="dot"></div><span>Accueil et conseil client en face-à-face</span></div>
+            <div class="skill-item"><div class="dot"></div><span>Gestion des fichiers clients (email, clé USB)</span></div>
+            <div class="skill-item"><div class="dot"></div><span>Plastification, reliure et finitions</span></div>
+            <div class="skill-item"><div class="dot"></div><span>Confiance en soi et communication avec les clients</span></div>
+            <div class="skill-item"><div class="dot"></div><span>Travail en équipe dans un environnement professionnel</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="exp-quote">
+            <p>
+              "J'ai appris pas mal de choses lors de mon stage chez eux, c'était vraiment intéressant de voir les différents postes dans ce genre de magasin. Ça m'a surtout aidé sur le plan personnel, notamment avec ma confiance en moi et ma peur de discuter avec les gens."
+            </p>
+          </div>
+          <div class="exp-quote" style="margin-top:1rem">
+            <p>
+              "J'ai essayé d'aider autant que j'ai pu, et ça m'a fait du bien, surtout avec le personnel, qui était super gentil."
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONCLUSION -->
+  <section id="conclusion">
+    <div class="container">
+      <div class="conclusion-layout">
+        <div>
+          <div class="section-label">07 — Conclusion</div>
+          <h2 class="section-title">Bilan &amp;<br/><span>remerciements</span></h2>
+          <div class="divider"></div>
+          <p class="section-text">
+            Ce stage m'a permis de découvrir concrètement le monde du travail dans le secteur de l'imprimerie et de la papeterie. J'ai pu développer des compétences techniques et humaines que je réutiliserai dans ma future vie professionnelle.
+          </p>
+          <p class="section-text" style="margin-top:1rem">
+            Je remercie chaleureusement toute l'équipe de Bureau Vallée pour leur accueil, leur patience et leur bonne humeur tout au long de mon stage. J'espère pouvoir les retrouver pour une prochaine expérience professionnelle.
+          </p>
+        </div>
+        <div class="merci-block">
+          <div class="big">Merci !</div>
+          <p>À toute l'équipe de <strong>Bureau Vallée</strong> pour ce stage formateur et cette belle expérience humaine.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Rapport de stage · <strong>Bureau Vallée</strong> · Lycée Avenue Hauterive, Castres · 2024–2025</p>
+  </footer>
+
+</body>
+</html>
